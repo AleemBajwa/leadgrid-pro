@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeadGrid Pro</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      width: 380px;
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 16px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #1e293b;
+      margin-bottom: 14px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #6366f1, #3b82f6);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      color: #fff;
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .badge-pro {
+      font-size: 10px;
+      font-weight: 700;
+      background: #3b82f6;
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    /* Stats Dashboard */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .stat-card {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 10px 8px;
+      text-align: center;
+      border: 1px solid #334155;
+    }
+
+    .stat-num {
+      font-size: 18px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: #94a3b8;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* Progress & Status */
+    .status-box {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      border: 1px solid #334155;
+    }
+
+    .status-text {
+      font-size: 12px;
+      color: #cbd5e1;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: #334155;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #38bdf8, #6366f1);
+      transition: width 0.3s ease;
+    }
+
+    /* Options Panel */
+    .options-group {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 14px;
+      border: 1px solid #334155;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #cbd5e1;
+    }
+
+    .option-input {
+      width: 65px;
+      background: #0f172a;
+      border: 1px solid #475569;
+      border-radius: 4px;
+      color: #f8fafc;
+      padding: 4px 6px;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 34px;
+      height: 18px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #475569;
+      transition: .3s;
+      border-radius: 18px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: .3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #6366f1;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(16px);
+    }
+
+    /* Action Buttons */
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #3b82f6);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    .btn-stop {
+      background: #ef4444;
+      color: #fff;
+      display: none;
+    }
+
+    .btn-export {
+      background: #10b981;
+      color: #fff;
+    }
+
+    .btn-export:disabled {
+      background: #334155;
+      color: #64748b;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid #334155;
+      color: #94a3b8;
+      font-size: 11px;
+      padding: 6px;
+    }
+
+    .btn-secondary:hover {
+      background: #1e293b;
+      color: #cbd5e1;
+    }
+
+    .footer {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .license-link {
+      color: #38bdf8;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .license-link:hover {
+      text-decoration: underline;
+    }
+
+    .license-modal {
+      display: none;
+      margin-top: 10px;
+      padding: 10px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 6px;
+    }
+
+    .license-input-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .license-input-row input {
+      flex: 1;
+      background: #1e293b;
+      border: 1px solid #475569;
+      color: #fff;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+
+    .license-input-row button {
+      background: #6366f1;
+      border: none;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="brand">
+      <div class="brand-icon">LG</div>
+      <div class="brand-title">LeadGrid</div>
+    </div>
+    <span class="badge-pro" id="planBadge">FREE TIER</span>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-num" id="statLeads">0</div>
+      <div class="stat-label">Leads</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statPhones">0</div>
+      <div class="stat-label">Phones</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num" id="statEmails">0</div>
+      <div class="stat-label">Emails</div>
+    </div>
+  </div>
+
+  <div class="status-box">
+    <div class="status-text">
+      <span id="statusLabel">Ready to extract</span>
+      <span id="statusCounter">0 / 50</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+
+  <div class="options-group">
+    <div class="option-row">
+      <span>Max Leads Target</span>
+      <input type="number" id="maxLeadsInput" class="option-input" value="50" min="5" max="1000">
+    </div>
+    <div class="option-row">
+      <span>Deep Website Email Enrichment</span>
+      <label class="switch">
+        <input type="checkbox" id="enrichEmailsToggle" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+    <div class="option-row">
+      <span>Auto-Grid Panning (Bypass 120-Cap)</span>
+      <label class="switch">
+        <input type="checkbox" id="gridPanToggle" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="btn-group">
+    <button class="btn btn-primary" id="startBtn">
+      ▶ Start Scraping Current Map
+    </button>
+    <button class="btn btn-stop" id="stopBtn">
+      ⏹ Stop Scraping
+    </button>
+    <button class="btn btn-export" id="exportBtn" disabled>
+      ⬇ Export Leads to CSV (.xlsx ready)
+    </button>
+    <button class="btn btn-secondary" id="clearBtn">
+      Clear Collected Data
+    </button>
+  </div>
+
+  <div class="footer">
+    <span id="licenseStatus">Free plan limits to 25 leads.</span>
+    <a class="license-link" id="toggleLicenseBtn">Enter License Key</a>
+    
+    <div class="license-modal" id="licenseModal">
+      <div style="font-size: 11px; color: #94a3b8; text-align: left;">Enter your Gumroad / Whop license key:</div>
+      <div class="license-input-row">
+        <input type="text" id="licenseKeyInput" placeholder="LEADGRID-PRO-XXXX">
+        <button id="activateLicenseBtn">Activate</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
