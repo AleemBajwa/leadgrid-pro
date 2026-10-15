@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "LeadGrid: Google Maps B2B Lead Scraper & Email Enricher",
-  "version": "1.0.0",
-  "description": "Extract unlimited B2B leads from Google Maps with automatic grid-panning, phone numbers, and deep website email enrichment.",
+  "name": "LeadGrid: Maps B2B Lead Scraper & Enricher",
+  "version": "1.0.1",
+  "description": "Extract unlimited B2B leads from maps with automatic grid-panning, phone numbers, and deep website email enrichment.",
   "permissions": [
     "activeTab",
     "storage",

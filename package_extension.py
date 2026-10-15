@@ -2,7 +2,8 @@ import os
 import zipfile
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
-zip_path = os.path.join(base_dir, "leadgrid-pro-v1.0.0.zip")
+zip_path = os.path.join(base_dir, "leadgrid-pro-v1.0.1.zip")
+zip_path_legacy = os.path.join(base_dir, "leadgrid-pro-v1.0.0.zip")
 
 include_dirs = ["popup", "content", "background", "enricher", "icons"]
 include_files = ["manifest.json"]
@@ -22,4 +23,7 @@ with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zip_out:
                     rel_p = os.path.relpath(full_p, base_dir)
                     zip_out.write(full_p, rel_p)
 
+import shutil
+shutil.copyfile(zip_path, zip_path_legacy)
 print(f"Extension zipped successfully: {zip_path}")
+print(f"Legacy zip updated: {zip_path_legacy}")
